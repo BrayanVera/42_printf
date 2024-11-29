@@ -1,0 +1,24 @@
+int	ft_printf_string(va_list ap);
+int	ft_printf_pointer(va_list ap);
+int	ft_printf_int(va_list ap);
+int	ft_printf_uint(va_list ap);
+int	ft_printf_hexa(va_list ap);
+int	ft_printf_percent(va_list ap);
+
+
+	dispatch_table[1].format = 's';
+	dispatch_table[1].function = ft_printf_string;
+	dispatch_table[2].format = 'p';
+	dispatch_table[2].function = ft_printf_pointer;
+	dispatch_table[3].format = 'd';
+	dispatch_table[3].function = ft_printf_int;
+	dispatch_table[4].format = 'i';
+	dispatch_table[4].function = ft_printf_int;
+	dispatch_table[5].format = 'u';
+	dispatch_table[5].function = ft_printf_uint;
+	dispatch_table[6].format = 'x';
+	dispatch_table[6].function = ft_printf_hexa;
+	dispatch_table[7].format = 'X';
+	dispatch_table[7].function = ft_printf_hexa;
+	dispatch_table[8].format = '%';
+	dispatch_table[8].function = ft_printf_percent;
