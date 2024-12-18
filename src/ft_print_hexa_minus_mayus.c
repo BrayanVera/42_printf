@@ -10,30 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include <unistd.h>
-# include <stdarg.h>
-# include <limits.h>
-# include <stdbool.h>
+#include "../includes/ft_printf.h"
 
-int	ft_printf(char const *text, ...);
-int	prt_hexa(unsigned int nbr, bool upper_case);
-
-int	ft_printf_char(va_list ap);
-int	ft_printf_string(va_list ap);
-int	ft_printf_hexa(va_list ap);
-int ft_print_decimal(va_list ap);
-int ft_print_unsigned(va_list ap);
-int ft_print_hexa_minus(va_list ap);
-int ft_print_hexa_mayus(va_list ap);
-
-typedef int	(*t_format_func)(va_list ap);
-
-typedef struct t_format_map
+static size_t	h_digits(unsigned int n)
 {
-	char			format;
-	t_format_func	function;
-}	t_format_map;
+	size_t	digits;
 
-#endif
+	digits = 0;
+	if (n == 0)
+		return (1);
+	while (n != 0)
+	{
+		digits += 1;
+		n /= 16;
+	}
+	return (digits);
+}
+
+static void	put_hexa(unsigned int nbr, bool upper_case)
+{
+	static char	upper_digits[] = "0123456789ABCDEF";
+	static char	lower_digits[] = "0123456789abcdef";
+
+	if (nbr >= 16)
+		put_hexa((nbr / 16), upper_case);
+	if (upper_case == true)
+		write(STDOUT_FILENO, &upper_digits[nbr % 16], 1);
+	else
+		write(STDOUT_FILENO, &lower_digits[nbr % 16], 1);
+}
+
+int	prt_hexa(unsigned int nbr, bool upper_case)
+{
+	put_hexa(nbr, upper_case);
+	return (h_digits(nbr));
+}

@@ -10,30 +10,49 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include <unistd.h>
-# include <stdarg.h>
-# include <limits.h>
-# include <stdbool.h>
+#include "../includes/ft_printf.h"
 
-int	ft_printf(char const *text, ...);
-int	prt_hexa(unsigned int nbr, bool upper_case);
-
-int	ft_printf_char(va_list ap);
-int	ft_printf_string(va_list ap);
-int	ft_printf_hexa(va_list ap);
-int ft_print_decimal(va_list ap);
-int ft_print_unsigned(va_list ap);
-int ft_print_hexa_minus(va_list ap);
-int ft_print_hexa_mayus(va_list ap);
-
-typedef int	(*t_format_func)(va_list ap);
-
-typedef struct t_format_map
+static size_t	i_digits(int n)
 {
-	char			format;
-	t_format_func	function;
-}	t_format_map;
+	size_t	digits;
 
-#endif
+	digits = 0;
+	if (n <= 0)
+		digits += 1;
+	while (n != 0)
+	{
+		n /= 10;
+		digits += 1;
+	}
+	return (digits);
+}
+
+static void	put_int(int n)
+{
+	static char	digits[] = "0123456789";
+
+	if (n > 9)
+		put_int(n / 10);
+	write(STDOUT_FILENO, &digits[n % 10], 1);
+}
+
+int	prt_int(int n)
+{
+	int	len;
+
+	if (n == INT_MIN)
+		return ((write(STDOUT_FILENO, "-2147483648", 11)));
+	len = i_digits(n);
+	if (n < 0)
+	{
+		write(STDOUT_FILENO, "-", 1);
+		n *= -1;
+	}
+	put_int(n);
+	return (len);
+}
+
+int ft_print_decimal(va_list ap)
+{
+    return (prt_int(va_arg(ap, int)));
+}

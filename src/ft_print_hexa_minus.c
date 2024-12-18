@@ -12,17 +12,7 @@
 
 #include "../includes/ft_printf.h"
 
-int	ft_isascii(int ascii)
+int ft_print_hexa_minus(va_list ap)
 {
-	return (ascii >= 0 && ascii <= 127);
-}
-
-int	ft_putchar(char c)
-{
-	return (write (1, &c, 1));
-}
-
-int	ft_printf_char(va_list list)
-{
-	return (ft_putchar(va_arg(list, int)));
+    return (prt_hexa(va_arg(ap, ssize_t), false));
 }

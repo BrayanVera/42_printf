@@ -10,30 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include <unistd.h>
-# include <stdarg.h>
-# include <limits.h>
-# include <stdbool.h>
+#include "../includes/ft_printf.h"
 
-int	ft_printf(char const *text, ...);
-int	prt_hexa(unsigned int nbr, bool upper_case);
-
-int	ft_printf_char(va_list ap);
-int	ft_printf_string(va_list ap);
-int	ft_printf_hexa(va_list ap);
-int ft_print_decimal(va_list ap);
-int ft_print_unsigned(va_list ap);
-int ft_print_hexa_minus(va_list ap);
-int ft_print_hexa_mayus(va_list ap);
-
-typedef int	(*t_format_func)(va_list ap);
-
-typedef struct t_format_map
+static size_t	u_digits(unsigned int n)
 {
-	char			format;
-	t_format_func	function;
-}	t_format_map;
+	size_t	digits;
 
-#endif
+	digits = 0;
+	if (n == 0)
+		return (1);
+	while (n != 0)
+	{
+		n /= 10;
+		digits += 1;
+	}
+	return (digits);
+}
+
+void	put_unsigned(unsigned int nbr)
+{
+	static char	digits[] = "0123456789";
+
+	if (nbr > 9)
+		put_unsigned(nbr / 10);
+	write(STDOUT_FILENO, &digits[nbr % 10], 1);
+}
+
+int	prt_unsigned(unsigned int nbr)
+{
+	put_unsigned(nbr);
+	return (u_digits(nbr));
+}
+
+int ft_print_unsigned(va_list ap)
+{
+    return  (prt_unsigned(va_arg(ap, unsigned int)));
+}
