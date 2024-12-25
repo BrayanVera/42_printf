@@ -12,8 +12,9 @@
 
 #include "includes/ft_printf.h"
 
-int	ft_printf_percentage()
+int	ft_printf_percentage(va_list ap)
 {
+	(void)ap;
 	return (write(1, "%", 1));
 }
 

@@ -52,7 +52,7 @@ int	prt_int(int n)
 	return (len);
 }
 
-int ft_print_decimal(va_list ap)
+int	ft_print_decimal(va_list ap)
 {
-    return (prt_int(va_arg(ap, int)));
+	return (prt_int(va_arg(ap, int)));
 }

@@ -42,7 +42,7 @@ int	prt_unsigned(unsigned int nbr)
 	return (u_digits(nbr));
 }
 
-int ft_print_unsigned(va_list ap)
+int	ft_print_unsigned(va_list ap)
 {
-    return  (prt_unsigned(va_arg(ap, unsigned int)));
+	return (prt_unsigned(va_arg(ap, unsigned int)));
 }

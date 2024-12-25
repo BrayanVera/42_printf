@@ -12,7 +12,7 @@
 
 #include "../includes/ft_printf.h"
 
-int ft_print_hexa_minus(va_list ap)
+int	ft_print_hexa_minus(va_list ap)
 {
-    return (prt_hexa(va_arg(ap, ssize_t), false));
+	return (prt_hexa(va_arg(ap, ssize_t), false));
 }
